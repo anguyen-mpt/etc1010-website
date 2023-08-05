@@ -1,0 +1,171 @@
+---
+title: "Assignment 2"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: scroll
+    source_code: embed
+---
+
+<style>                     
+.navbar {
+  background-color:#38761d;
+  hover-color:#38761d
+}
+</style>   
+
+
+```{r setup, include=FALSE, message = FALSE, warning = FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(naniar)
+library(gridExtra)
+library(ggResidpanel)
+library(broom)
+library(here)
+library(readxl)
+library(readr)
+library(kableExtra)
+library(bookdown)
+library(ggplot2)
+library(plotly)
+library(visdat)
+library(dplyr)
+library(tidytext)
+```
+
+Introduction {data-icon="fa-bars"}
+====
+
+Column {data-width = 600}
+-----
+
+### **Introduction**
+The [data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-12-21/readme.md) comes from the Tidy Tuesday dataset, containing nutrition facts about many Starbucks drinks.
+
+**Purpose of the report**:
+
+Ever since its inception, Starbucks has grown to play an important in the everyday life fo many people and cultures around the world. For the past years, to cater to the needs of a growing increase body of health conscious people, Starbucks has introduced some drinks that are claimed to be healthier than its common drinks. This reports will explore some healthier drinks at Starbucks for people with different tastes based on a variety of ingredients and number of calories.
+
+**Structure of the report**:
+
+This report aims to explore four main research questions that focus on the top healthy drinks at Starbucks with three main categories (non-caffeine/caffeine/lactose-free) and factors that affect the number of calories. It will also predict the number of calories in a hypothetical Starbucks drink based on the given amount of sugar, fiber, total fat.
+
+* Research question 1: What are top five healthiest non-caffeine beverages at Starbucks
+
+* Research question 2: What are top five healthiest caffeine beverages at Starbucks by the measurement of calories, level of fat, sugar, fiber, etc?
+
+* Research question 3: What are top five healthiest lactose-free beverages at Starbucks by the measurement of calories, level of fat, sugar, fiber, etc?
+
+* Research question 4: What are the relationships between calories and the level of fat, sugar, fiber, etc? Predict the number of calories in a Starbucks drink if it has 50g of sugar, 10g of fiber, 50g of total fat. 
+
+***
+
+Methodology {data-icon="fa-bars"}
+===================================== 
+
+Column {.tabset data-height=550}
+------
+
+First, in order to make sure the data does not suffer from having a lot of missing values, we first check how many missing values it contains (if any) and the proportion of missing values in the data.
+
+```{r read data, echo = FALSE}
+starbucks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-12-21/starbucks.csv')
+```
+
+```{r missingness-check,  echo = TRUE}
+n_miss(starbucks) 
+prop_miss(starbucks) 
+```
+
+Because the dataset contains zero missing values, further steps to analyse the data can be proceeded. Given that the dataset comprises of coffee in different sizes offered at Starbucks, with grande as the most popular size, this report will only consider drinks in grande size to ensure consistency.
+
+```{r, include = FALSE, warning = FALSE, message = FALSE}
+table_1 <- starbucks %>%
+  filter(size == "grande", milk == 0, whip == 0) %>%
+  arrange(calories)
+
+view(table_1)
+
+table_2 <- starbucks %>%
+  filter(size == "grande", caffeine_mg == 0) %>%
+  arrange(calories)
+
+head(table_2)
+```
+
+
+Research question 1 {data-icon="fa-coffee"}
+===================================== 
+
+Column {.tabset data-height=550}
+------
+### Number of calories
+
+
+```{r, include = FALSE}
+starbucks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-12-21/starbucks.csv')
+
+starbucks %>%
+  count(size)
+
+starbucks %>%
+  count(milk)
+```
+
+Research question 2 {data-icon="fa-coffee"}
+===================================== 
+
+Column {.tabset data-height=550}
+------
+
+### Based on calories
+
+```{r}
+
+```
+
+### Based on total fat
+
+```{r}
+
+```
+
+### Based on sugar
+
+```{r}
+
+```
+
+### Based on fiber
+
+```{r}
+
+```
+
+Research question 3 {data-icon="fa-coffee"}
+===================================== 
+
+Column {.tabset data-height=550}
+------
+### Proportion of fat
+
+Research suggests that 400mg per day or less is an acceptable dose of caffeine for the general population. Hence, 
+
+Source: <https://www.betterhealth.vic.gov.au/health/healthyliving/caffeine#how-much-caffeine-is-okay-each-day>
+
+```{r}
+
+```
+
+Research question 4 {data-icon="fa-coffee"}
+===================================== 
+
+Column {.tabset data-height=550}
+------
+
+### Proportion of sugar
+
+```{r}
+
+```
